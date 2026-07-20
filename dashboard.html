@@ -4,30 +4,3 @@
     <div style="background: #313244; padding: 10px; border-radius: 8px;">Free Memory: <span id="heap" style="color:#89b4fa; font-weight:bold;">0 KB</span></div>
 </div>
 <div style="margin-top: 15px;"><canvas id="telemetryChart"></canvas></div>
-
-<script>
-    // 初始化子頁面專屬圖表
-    var ctx = document.getElementById('telemetryChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: { labels: [], datasets: [{ label: 'Free Memory (KB)', data: [], borderColor: '#89b4fa', fill: false }] },
-        options: { responsive: true }
-    });
-
-    // 註冊父頁面傳來的數據監聽
-    window.onWebSocketMessage = function(msg) {
-        if (msg.uptime !== undefined) {
-            document.getElementById('uptime').innerText = msg.uptime + 's';
-            document.getElementById('heap').innerText = (msg.free_heap / 1024).toFixed(1) + ' KB';
-
-            var timeLabel = new Date().toLocaleTimeString();
-            if (chart.data.labels.length > 10) {
-                chart.data.labels.shift();
-                chart.data.datasets[0].data.shift();
-            }
-            chart.data.labels.push(timeLabel);
-            chart.data.datasets[0].data.push((msg.free_heap / 1024).toFixed(1));
-            chart.update();
-        }
-    };
-</script>
