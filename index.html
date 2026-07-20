@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 雲端控制中心 (模組化路由版)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #181825; color: #cdd6f4; text-align: center; margin: 0; padding: 20px; }
+        h1 { color: #89b4fa; }
+        .config-bar { background: #313244; max-width: 600px; margin: 0 auto 20px auto; padding: 15px; border-radius: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .config-bar input { padding: 8px; font-size: 16px; border-radius: 6px; border: 1px solid #45475a; background: #1e1e2e; color: #a6e3a1; text-align: center; }
+        .btn-conn { background: #89b4fa; color: #1e1e2e; font-weight: bold; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; }
+        .status-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #f38ba8; margin-right: 8px; }
+        .online { background: #a6e3a1; }
+        .card { background: #1e1e2e; padding: 20px; border-radius: 12px; max-width: 600px; margin: 20px auto; border: 1px solid #313244; }
+    </style>
+</head>
+<body>
+
+    <h1>☁️ ESP32 模組化控制中心</h1>
+    
+    <div class="config-bar">
+        <label for="esp-ip">ESP32 區域 IP：</label>
+        <input type="text" id="esp-ip" value="172.20.10.2">
+        <button class="btn-conn" onclick="reconnectWS()">重新連線</button>
+    </div>
+
+    <p><span id="dot" class="status-dot"></span>WebSocket 狀態: <strong id="status">未連線</strong></p>
+    <p style="color: #f9e2af; font-size: 14px;">💡 按一下 ESP32 BOOT 按鈕可切換模組頁面！</p>
+
+    <!-- 動態載入頁面元件的容器 -->
+    <div id="app-container" class="card">
+        <h3>載入中...</h3>
+    </div>
+
+    <script>
+        let ws = null;
+        // 頁面路由清單：未來增加頁面只需擴充這個陣列！
+        const pageRoutes = ['dashboard.html', 'led_control.html'];
+        let currentPageIndex = 0;
+
+        // 動態載入子網頁 HTML
+        async function loadPage(pageUrl) {
+            try {
+                const response = await fetch(pageUrl);
+                const html = await response.text();
+                document.getElementById('app-container').innerHTML = html;
+                console.log("已載入頁面:", pageUrl);
+            } catch (e) {
+                document.getElementById('app-container').innerHTML = "<h3>頁面載入失敗: " + pageUrl + "</h3>";
+            }
+        }
+
+        function reconnectWS() {
+            const ip = document.getElementById('esp-ip').value.trim();
+            if (!ip) return;
+            if (ws) ws.close();
+
+            const wsUrl = 'ws://' + ip + '/ws';
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = () => {
+                document.getElementById('status').innerText = "已連線至 " + ip;
+                document.getElementById('dot').classList.add('online');
+            };
+
+            ws.onclose = () => {
+                document.getElementById('status').innerText = "連線已中斷";
+                document.getElementById('dot').classList.remove('online');
+            };
+
+            ws.onmessage = (event) => {
+                const msg = JSON.parse(event.data);
+
+                // 收到 BOOT 按鈕發送的頁面切換訊號 -> 輪播下一個頁面模組
+                if (msg.event === 'switch_page') {
+                    currentPageIndex = (currentPageIndex + 1) % pageRoutes.length;
+                    loadPage(pageRoutes[currentPageIndex]);
+                }
+
+                # 觸發子頁面內部的更新事件（若子頁面有自訂處理函式）
+                if (window.onWebSocketMessage) {
+                    window.onWebSocketMessage(msg);
+                }
+            };
+        }
+
+        // 預設載入第一個頁面
+        window.onload = () => {
+            loadPage(pageRoutes[0]);
+            reconnectWS();
+        };
+
+        // 提供全域發送 WebSocket 指令的介面給子頁面呼叫
+        function sendWebSocketCommand(dataObj) {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify(dataObj));
+            } else {
+                alert("WebSocket 未連線！");
+            }
+        }
+    </script>
+</body>
+</html>
