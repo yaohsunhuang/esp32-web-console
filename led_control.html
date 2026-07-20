@@ -2,12 +2,13 @@
 <p>目前板載 LED 狀態: <strong id="led-state-text" style="color:#e74c3c;">OFF</strong></p>
 
 <div>
-    <button style="padding:10px; background:#2ecc71; color:white; border:none; border-radius:5px;" onclick="sendCmd('AT+LED=ON')">發送 AT+LED=ON</button>
-    <button style="padding:10px; background:#e74c3c; color:white; border:none; border-radius:5px;" onclick="sendCmd('AT+LED=OFF')">發送 AT+LED=OFF</button>
-    <button style="padding:10px; background:#f39c12; color:white; border:none; border-radius:5px;" onclick="sendCmd('DUMMY_CMD')">發送干擾指令</button>
+    <button style="padding:10px; background:#2ecc71; color:white; border:none; border-radius:5px; cursor:pointer;" onclick="sendCmd('AT+LED=ON')">發送 AT+LED=ON</button>
+    <button style="padding:10px; background:#e74c3c; color:white; border:none; border-radius:5px; cursor:pointer;" onclick="sendCmd('AT+LED=OFF')">發送 AT+LED=OFF</button>
+    <button style="padding:10px; background:#f39c12; color:white; border:none; border-radius:5px; cursor:pointer;" onclick="sendCmd('DUMMY_CMD')">發送干擾指令</button>
 </div>
 
-<div id="console" style="background:#11111b; color:#a6e3a1; font-family:monospace; padding:10px; margin-top:15px; text-align:left; height:80px; overflow-y:auto;">Log: 等待操作指令...</div>
+<div id="console" style="background:#11111b; color:#a6e3a1; font-family:monospace; padding:10px; margin-top:15px; text-align:left; height:80px; overflow-y:auto; border-radius:6px;">Log: 等待操作指令...</div>
+
 
 <script>
     function sendCmd(cmdStr) {
