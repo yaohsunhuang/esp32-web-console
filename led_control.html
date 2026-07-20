@@ -8,31 +8,3 @@
 </div>
 
 <div id="console" style="background:#11111b; color:#a6e3a1; font-family:monospace; padding:10px; margin-top:15px; text-align:left; height:80px; overflow-y:auto; border-radius:6px;">Log: 等待操作指令...</div>
-
-
-<script>
-    function sendCmd(cmdStr) {
-        // 呼叫 index.html 的全域 WS 發送函式
-        sendWebSocketCommand({ action: 'send_uart', cmd: cmdStr });
-    }
-
-    window.onWebSocketMessage = function(msg) {
-        var consoleEl = document.getElementById('console');
-        var ledText = document.getElementById('led-state-text');
-
-        if (msg.uart_log) {
-            consoleEl.innerHTML += "<br>" + msg.uart_log;
-            consoleEl.scrollTop = consoleEl.scrollHeight;
-        }
-
-        if (msg.led_state !== undefined) {
-            if (msg.led_state === 1) {
-                ledText.innerText = "ON";
-                ledText.style.color = "#2ecc71";
-            } else {
-                ledText.innerText = "OFF";
-                ledText.style.color = "#e74c3c";
-            }
-        }
-    };
-</script>
