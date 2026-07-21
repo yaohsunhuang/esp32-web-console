@@ -1,0 +1,246 @@
+<!-- monkey_agent.html - GitHub Pages 託管子模組組件 -->
+<div class="space-y-4 text-slate-100 font-sans text-left">
+
+    <!-- 頂部區塊 -->
+    <div class="flex justify-between items-center mb-1">
+        <h2 class="text-sm font-bold text-slate-300 flex items-center gap-2">
+            <i class="fa-solid fa-monkey text-yellow-500"></i> 猴子歌謠行為卡片 (5路 Touch Pin)
+        </h2>
+        <span id="active-gpio" class="text-xs font-mono font-bold text-blue-400">STANDBY (等待觸控)</span>
+    </div>
+
+    <!-- 5 大星期卡片區 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+
+        <!-- 星期一卡片 -->
+        <div id="card-monday" class="bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-3 -top-3 text-red-500/10 text-6xl font-bold">1</div>
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30">GPIO 13</span>
+                    <span class="text-[10px] text-slate-400 font-mono">閃爍 1 下</span>
+                </div>
+                <div class="text-2xl mb-1 text-center py-2 bg-red-500/10 rounded-xl border border-red-500/20">👕 🐒</div>
+                <h3 class="font-bold text-slate-100 text-sm text-center mb-1">星期一 穿新衣</h3>
+                <p class="text-[11px] text-slate-400 mb-3 text-center">系統自我升級與環境部署，更新 OpenClaw 核心套件。</p>
+            </div>
+            <button onclick="triggerDay('monday', 13, 1)" class="w-full py-2 bg-slate-700 hover:bg-blue-600 active:bg-blue-700 text-xs font-medium rounded-xl transition shadow">模擬觸碰 GPIO 13</button>
+        </div>
+
+        <!-- 星期二卡片 -->
+        <div id="card-tuesday" class="bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-3 -top-3 text-yellow-500/10 text-6xl font-bold">2</div>
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">GPIO 12</span>
+                    <span class="text-[10px] text-slate-400 font-mono">閃爍 2 下</span>
+                </div>
+                <div class="text-2xl mb-1 text-center py-2 bg-yellow-500/10 rounded-xl border border-yellow-500/20">🍌 🐵</div>
+                <h3 class="font-bold text-slate-100 text-sm text-center mb-1">星期二 肚子餓</h3>
+                <p class="text-[11px] text-slate-400 mb-3 text-center">自動餵食 Agent，啟動全網爬蟲抓取競品與市場資料。</p>
+            </div>
+            <button onclick="triggerDay('tuesday', 12, 2)" class="w-full py-2 bg-slate-700 hover:bg-blue-600 active:bg-blue-700 text-xs font-medium rounded-xl transition shadow">模擬觸碰 GPIO 12</button>
+        </div>
+
+        <!-- 星期三卡片 -->
+        <div id="card-wednesday" class="bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-3 -top-3 text-emerald-500/10 text-6xl font-bold">3</div>
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">GPIO 14</span>
+                    <span class="text-[10px] text-slate-400 font-mono">閃爍 3 下</span>
+                </div>
+                <div class="text-2xl mb-1 text-center py-2 bg-emerald-500/10 rounded-xl border border-emerald-500/20">🧗 🙊</div>
+                <h3 class="font-bold text-slate-100 text-sm text-center mb-1">星期三 去爬山</h3>
+                <p class="text-[11px] text-slate-400 mb-3 text-center">深度數據挖掘，運用 LLM 進行分層分析與趨勢提煉。</p>
+            </div>
+            <button onclick="triggerDay('wednesday', 14, 3)" class="w-full py-2 bg-slate-700 hover:bg-blue-600 active:bg-blue-700 text-xs font-medium rounded-xl transition shadow">模擬觸碰 GPIO 14</button>
+        </div>
+
+        <!-- 星期四卡片 -->
+        <div id="card-thursday" class="bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-3 -top-3 text-blue-500/10 text-6xl font-bold">4</div>
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">GPIO 27</span>
+                    <span class="text-[10px] text-slate-400 font-mono">閃爍 4 下</span>
+                </div>
+                <div class="text-2xl mb-1 text-center py-2 bg-blue-500/10 rounded-xl border border-blue-500/20">📝 🙈</div>
+                <h3 class="font-bold text-slate-100 text-sm text-center mb-1">星期四 去考試</h3>
+                <p class="text-[11px] text-slate-400 mb-3 text-center">自動驗證與報表格式化，生成 Markdown 摘要與表格。</p>
+            </div>
+            <button onclick="triggerDay('thursday', 27, 4)" class="w-full py-2 bg-slate-700 hover:bg-blue-600 active:bg-blue-700 text-xs font-medium rounded-xl transition shadow">模擬觸碰 GPIO 27</button>
+        </div>
+
+        <!-- 星期五卡片 -->
+        <div id="card-friday" class="bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-3 -top-3 text-purple-500/10 text-6xl font-bold">5</div>
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30">GPIO 33</span>
+                    <span class="text-[10px] text-slate-400 font-mono">閃爍 5 下</span>
+                </div>
+                <div class="text-2xl mb-1 text-center py-2 bg-purple-500/10 rounded-xl border border-purple-500/20">💃 🙉</div>
+                <h3 class="font-bold text-slate-100 text-sm text-center mb-1">星期五 去跳舞</h3>
+                <p class="text-[11px] text-slate-400 mb-3 text-center">終端派發收網，將最終報告封包並呼叫 SMTP 自動發信。</p>
+            </div>
+            <button onclick="triggerDay('friday', 33, 5)" class="w-full py-2 bg-slate-700 hover:bg-blue-600 active:bg-blue-700 text-xs font-medium rounded-xl transition shadow">模擬觸碰 GPIO 33</button>
+        </div>
+
+    </div>
+
+    <!-- Agent Console Log 區塊 -->
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 flex flex-col mt-4">
+        <div class="flex justify-between items-center mb-2">
+            <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-terminal text-emerald-400"></i> Agent 執行 Console Log
+            </h3>
+            <button onclick="clearConsole()" class="text-[10px] text-slate-400 hover:text-slate-200"><i class="fa-solid fa-trash-can"></i> 清除</button>
+        </div>
+        <div id="console-log" class="bg-slate-950 font-mono text-[11px] p-3 rounded-xl overflow-y-auto h-36 space-y-1.5 border border-slate-800">
+            <div class="text-slate-500">[System] Dashboard Component Loaded. Waiting for ESP32 touch signal...</div>
+        </div>
+    </div>
+
+    <!-- Hermes Agent 處理流程 模擬彈窗 (Modal) -->
+    <div id="process-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex justify-center items-center p-4 z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-sm w-full shadow-2xl flex flex-col items-center text-center space-y-4 relative">
+            
+            <div class="w-16 h-16 rounded-full bg-blue-600/20 border border-blue-500/40 flex items-center justify-center relative">
+                <i class="fa-solid fa-robot text-2xl text-blue-400 animate-bounce"></i>
+                <div class="absolute inset-0 rounded-full border-2 border-blue-500 border-t-transparent animate-spin"></div>
+            </div>
+
+            <div>
+                <span id="modal-tag" class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">HERMES AGENT PIPELINE</span>
+                <h3 id="modal-title" class="text-base font-bold text-slate-100 mt-1">Hermes Agent 處理中...</h3>
+                <p id="modal-desc" class="text-xs text-slate-400 mt-1">正在執行 OpenClaw 核心套件自動更新...</p>
+            </div>
+
+            <div id="modal-diagram" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 flex items-center justify-center space-x-3 text-slate-300">
+                <i id="diagram-icon-1" class="fa-solid fa-microchip text-blue-400 text-xl"></i>
+                <i class="fa-solid fa-arrow-right-long text-slate-600 text-xs"></i>
+                <i id="diagram-icon-2" class="fa-solid fa-gears text-purple-400 text-xl"></i>
+                <i class="fa-solid fa-arrow-right-long text-slate-600 text-xs"></i>
+                <i id="diagram-icon-3" class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
+            </div>
+
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                <div id="modal-progress" class="bg-blue-500 h-full w-0 transition-all duration-300"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- JS 邏輯 -->
+<script>
+    var dayNames = {
+        'monday': '星期一 (穿新衣)',
+        'tuesday': '星期二 (肚子餓)',
+        'wednesday': '星期三 (去爬山)',
+        'thursday': '星期四 (去考試)',
+        'friday': '星期五 (去跳舞)'
+    };
+
+    var modalConfigs = {
+        'monday': {
+            title: '週一環境更新 (scenario_monday)',
+            desc: 'Hermes Agent 正在自動檢查並更新 OpenClaw 爬蟲套件與系統環境...',
+            icons: ['fa-microchip', 'fa-arrows-rotate', 'fa-box-archive']
+        },
+        'tuesday': {
+            title: '週二數據餵食 (scenario_tuesday)',
+            desc: 'OpenClaw 啟動全網爬蟲，抓取 3C 與硬體市場情報 Raw Data...',
+            icons: ['fa-spider', 'fa-database', 'fa-file-lines']
+        },
+        'wednesday': {
+            title: '週三深度運算 (scenario_wednesday)',
+            desc: '呼叫 LLM 進行巨量資料分層、關聯性與市場趨勢挖掘...',
+            icons: ['fa-network-wired', 'fa-brain', 'fa-chart-line']
+        },
+        'thursday': {
+            title: '週四 QA 除錯 (scenario_thursday)',
+            desc: '進行數據防呆驗證，自動轉換生成 Markdown 摘要與結構化表格...',
+            icons: ['fa-vial-circle-check', 'fa-file-code', 'fa-table-cells']
+        },
+        'friday': {
+            title: '週五派發收網 (scenario_friday)',
+            desc: '封包精簡摘要與 Markdown 表格，呼叫 SMTP 服務發送至公司信箱...',
+            icons: ['fa-file-zipper', 'fa-paper-plane', 'fa-envelope-circle-check']
+        }
+    };
+
+    function triggerDay(dayKey, gpioNum, blinkTimes) {
+        document.querySelectorAll('[id^="card-"]').forEach(el => el.classList.remove('card-active'));
+        var activeCard = document.getElementById(`card-${dayKey}`);
+        if (activeCard) activeCard.classList.add('card-active');
+
+        var activeGpioEl = document.getElementById('active-gpio');
+        if (activeGpioEl) {
+            activeGpioEl.innerText = `GPIO ${gpioNum} ACTIVE`;
+            activeGpioEl.className = "text-xs font-mono font-bold text-emerald-400";
+        }
+
+        logConsole('IoT Event', `GPIO ${gpioNum} (${dayNames[dayKey]}) 觸發`, 'text-blue-400');
+        logConsole('ESP32', `板載 LED 閃爍 ${blinkTimes} 下`, 'text-yellow-400');
+
+        showProcessModal(dayKey);
+    }
+
+    function showProcessModal(dayKey) {
+        var config = modalConfigs[dayKey];
+        var modal = document.getElementById('process-modal');
+        var progress = document.getElementById('modal-progress');
+
+        if (!modal || !config) return;
+
+        document.getElementById('modal-title').innerText = config.title;
+        document.getElementById('modal-desc').innerText = config.desc;
+        
+        document.getElementById('diagram-icon-1').className = `fa-solid ${config.icons[0]} text-blue-400 text-xl`;
+        document.getElementById('diagram-icon-2').className = `fa-solid ${config.icons[1]} text-purple-400 text-xl animate-pulse`;
+        document.getElementById('diagram-icon-3').className = `fa-solid ${config.icons[2]} text-emerald-400 text-xl`;
+
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        progress.style.width = '0%';
+
+        setTimeout(() => { progress.style.width = '45%'; }, 300);
+        setTimeout(() => { progress.style.width = '85%'; }, 800);
+        setTimeout(() => { 
+            progress.style.width = '100%'; 
+            logConsole('Hermes', `scenario_${dayKey} 任務執行完畢！`, 'text-purple-400');
+            if (dayKey === 'friday') {
+                logConsole('SMTP', '精簡摘要與 Markdown 表格已成功發送至信箱！', 'text-pink-400');
+            }
+        }, 1300);
+
+        setTimeout(() => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }, 1800);
+    }
+
+    function logConsole(source, text, colorClass) {
+        var consoleBox = document.getElementById('console-log');
+        if (!consoleBox) return;
+        var now = new Date().toLocaleTimeString();
+        var logEntry = document.createElement('div');
+        logEntry.className = "flex space-x-1.5";
+        logEntry.innerHTML = `<span class="text-slate-600">[${now}]</span> <span class="${colorClass} font-bold">[${source}]</span> <span class="text-slate-300">${text}</span>`;
+        consoleBox.appendChild(logEntry);
+        consoleBox.scrollTop = consoleBox.scrollHeight;
+    }
+
+    function clearConsole() {
+        var consoleBox = document.getElementById('console-log');
+        if (consoleBox) consoleBox.innerHTML = '<div class="text-slate-500">[System] Console log cleared.</div>';
+    }
+
+    // 關鍵：對接全域 WebSocket 訊息
+    window.onWebSocketMessage = function(msg) {
+        if (msg.touch_event) {
+            triggerDay(msg.touch_event, msg.gpio, msg.blink);
+        }
+    };
+</script>
